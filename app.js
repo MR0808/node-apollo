@@ -8,6 +8,8 @@ const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
 const cors = require('cors');
 const { ApolloServer, gql } = require('apollo-server-express');
+const expressPlayground =
+    require('graphql-playground-middleware-express').default;
 
 const auth = require('./middleware/auth');
 const { clearImage } = require('./util/file');
@@ -93,6 +95,8 @@ const startServer = async () => {
 };
 
 startServer();
+
+app.get('/playground', expressPlayground({ endpoint: '/graphql' }));
 
 app.use((error, req, res, next) => {
     console.log(error);
